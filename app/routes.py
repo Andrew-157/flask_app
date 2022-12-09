@@ -8,8 +8,9 @@ def create_user():
 
     username = request.json['username']
     email = request.json['email']
+    age = request.json['age']
 
-    new_user = User(username=username, email=email)
+    new_user = User(username=username, email=email, age=age)
 
     db.session.add(new_user)
     db.session.commit()
