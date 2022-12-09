@@ -1,7 +1,7 @@
 from . import db
 
 
-class Users(db.Model):
+class User(db.Model):
 
     __tablename__ = 'users'
 
@@ -9,6 +9,7 @@ class Users(db.Model):
     username = db.Column(db.String(16), index=True,
                          unique=True, nullable=False)
     email = db.Column(db.String(64), index=False, unique=True, nullable=False)
+    age = db.Column(db.Integer)
 
     def __repr__(self):
         return f"User {self.username}"
