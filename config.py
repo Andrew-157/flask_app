@@ -1,5 +1,5 @@
 
-class Config:
+class LocalConfig:
 
     # Database
     SQLALCHEMY_DATABASE_URI = 'mysql://root:password@localhost/users'
