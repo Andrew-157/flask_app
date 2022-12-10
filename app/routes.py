@@ -10,7 +10,8 @@ def create_user():
     email = request.json['email']
     age = request.json['age']
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter(
+        (User.username == username) | (User.email == email)).first()
 
     if user:
         return f"User {username} already exists", 409
@@ -37,7 +38,8 @@ def get_users():
     username = request.args.get('username')
     email = request.args.get('email')
 
-    user = User.query.filter(
-        User.username == username).first_or_404()
+    query_filter = User.username == username if username else User.email == email
+
+    user = User.query.filter(query_filter).first_or_404()
 
     return f"User: {user.username}\nEmail: {user.email}\nAge: {user.age}"
