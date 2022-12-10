@@ -30,11 +30,22 @@ def get_user(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
 
     if request.method == 'DELETE':
+
         user = User.query.filter(User.id == user_id).first()
         db.session.delete(user)
         db.session.commit()
 
         return f"User {user.username} was deleted"
+
+    if request.method == 'PUT':
+
+        username = request.json['username']
+        email = request.json['email']
+        age = request.json['age']
+
+        db.session.query(User).filter_by(id=user_id).update(
+            {'username': username, 'email': email, 'age': age})
+        db.session.commit()
 
     return f"ID: {user_id}\nUser: {user.username}\nEmail: {user.email}\nAge: {user.age}"
 
