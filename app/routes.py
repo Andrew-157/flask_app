@@ -29,7 +29,14 @@ def get_user(user_id):
 
     user = User.query.filter_by(id=user_id).first_or_404()
 
-    return f"User: {user.username}\nEmail: {user.email}\nAge: {user.age}"
+    if request.method == 'DELETE':
+        user = User.query.filter(User.id == user_id).first()
+        db.session.delete(user)
+        db.session.commit()
+
+        return f"User {user.username} was deleted"
+
+    return f"ID: {user_id}\nUser: {user.username}\nEmail: {user.email}\nAge: {user.age}"
 
 
 @app.route('/users', methods=['GET'])
@@ -42,4 +49,4 @@ def get_users():
 
     user = User.query.filter(query_filter).first_or_404()
 
-    return f"User: {user.username}\nEmail: {user.email}\nAge: {user.age}"
+    return f"ID: {user.id}\nUser: {user.username}\nEmail: {user.email}\nAge: {user.age}"
